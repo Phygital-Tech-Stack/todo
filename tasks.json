@@ -4,9 +4,9 @@
       "id": 1,
       "title": "Claude Workflow repo \u2014 get up to date",
       "detail": "Review and close/fix outstanding issues on the Claude workflow repo",
-      "status": "pending",
+      "status": "done",
       "created": "2026-03-16",
-      "completed": null,
+      "completed": "2026-03-16",
       "tags": [
         "dev",
         "github"
