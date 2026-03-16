@@ -40,8 +40,8 @@
     },
     {
       "id": 4,
-      "title": "Sync claude-workflow to all 10 managed repos",
-      "detail": "Run sync_all.sh against: erp, phast, phaze, phlow, phuse, phtch, PhX, phronesis, pharos-mcp, www. Creates a PR per repo. Needs gh CLI or GitHub API for PR creation. Dry-run first.",
+      "title": "Merge claude-workflow v1.5.0 PRs into all 10 managed repos",
+      "detail": "PRs created 2026-03-16. Merge each into main, then run /sync-workflow --check to confirm zero drift. PRs: erp#17, phast#100, phaze#18, phlow#5, phuse#15, phtch#21, PhX#23, phronesis#6, pharos-mcp#6, www#5",
       "status": "pending",
       "created": "2026-03-16",
       "completed": null,
