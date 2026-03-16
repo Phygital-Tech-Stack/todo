@@ -54,7 +54,7 @@
     {
       "id": 5,
       "title": "Finish Phast deployment for PABT",
-      "detail": "",
+      "detail": "PABT = Pump & Abrasion Technology. Resolve outstanding GitHub issues, then deploy Phtch and PhX for the PABT client. Repos: https://github.com/Phygital-Tech-Stack/phtch | https://github.com/Phygital-Tech-Stack/PhX",
       "status": "pending",
       "created": "2026-03-16",
       "completed": null,
