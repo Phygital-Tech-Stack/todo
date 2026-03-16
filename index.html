@@ -203,13 +203,7 @@
 <body>
   <header>
     <h1>📋 Nudge</h1>
-    <div style="display:flex;gap:8px;align-items:center;">
-      <button id="install-btn" onclick="installApp()"
-        style="display:none;align-items:center;gap:5px;padding:5px 10px;border-radius:20px;border:1.5px solid var(--tg-theme-button-color,#4a90d9);background:transparent;color:var(--tg-theme-button-color,#4a90d9);font-size:0.78rem;cursor:pointer;">
-        ⬇ Install
-      </button>
-      <span class="badge" id="pending-count">…</span>
-    </div>
+    <span class="badge" id="pending-count">…</span>
   </header>
 
   <div class="filter-tabs">
@@ -350,30 +344,7 @@
       navigator.serviceWorker.register('./sw.js');
     }
 
-    // PWA install prompt
-    let installPrompt = null;
-    const installBtn = document.getElementById('install-btn');
 
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      installPrompt = e;
-      if (installBtn) installBtn.style.display = 'flex';
-    });
-
-    window.addEventListener('appinstalled', () => {
-      if (installBtn) installBtn.style.display = 'none';
-      installPrompt = null;
-    });
-
-    window.installApp = async () => {
-      if (!installPrompt) return;
-      installPrompt.prompt();
-      const { outcome } = await installPrompt.userChoice;
-      if (outcome === 'accepted') {
-        installPrompt = null;
-        if (installBtn) installBtn.style.display = 'none';
-      }
-    };
   </script>
 </body>
 </html>
