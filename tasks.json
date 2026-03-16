@@ -42,9 +42,9 @@
       "id": 4,
       "title": "Sync claude-workflow to all 10 managed repos",
       "detail": "Run sync_all.sh against: erp, phast, phaze, phlow, phuse, phtch, PhX, phronesis, pharos-mcp, www. Creates a PR per repo. Needs gh CLI or GitHub API for PR creation. Dry-run first.",
-      "status": "done",
+      "status": "pending",
       "created": "2026-03-16",
-      "completed": "2026-03-16",
+      "completed": null,
       "tags": [
         "dev",
         "github",
