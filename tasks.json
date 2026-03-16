@@ -5,90 +5,70 @@
       "title": "Claude Workflow repo \u2014 get up to date",
       "detail": "Review and close/fix outstanding issues on the Claude workflow repo",
       "status": "done",
+      "category": "work",
       "created": "2026-03-16",
       "completed": "2026-03-16",
-      "tags": [
-        "dev",
-        "github"
-      ]
+      "tags": ["dev", "github"]
     },
     {
       "id": 2,
       "title": "Alu-Cab questionnaires \u2014 fix for discovery phase",
       "detail": "Fix questionnaires for the Alu-Cab discovery phase running on the OST machine (same host as OpenClaw/OpenFlow)",
       "status": "done",
+      "category": "work",
       "created": "2026-03-16",
       "completed": "2026-03-16",
-      "tags": [
-        "alu-cab",
-        "openflow",
-        "dev"
-      ]
+      "tags": ["alu-cab", "openflow", "dev"]
     },
     {
       "id": 3,
       "title": "Deploy Phlow for GRW",
       "detail": "Deploy Phlow (Ekkerd's own workflow management app) for GRW. Repo: https://github.com/Phygital-Tech-Stack/phlow",
       "status": "pending",
+      "category": "work",
       "created": "2026-03-16",
       "completed": null,
-      "tags": [
-        "openflow",
-        "grw",
-        "deploy"
-      ]
+      "tags": ["openflow", "grw", "deploy"]
     },
     {
       "id": 4,
       "title": "Merge claude-workflow v1.5.0 PRs into all 10 managed repos",
       "detail": "PRs created 2026-03-16. Merge each into main, then run /sync-workflow --check to confirm zero drift. PRs: erp#17, phast#100, phaze#18, phlow#5, phuse#15, phtch#21, PhX#23, phronesis#6, pharos-mcp#6, www#5",
       "status": "pending",
+      "category": "work",
       "created": "2026-03-16",
       "completed": null,
-      "tags": [
-        "dev",
-        "github",
-        "claude-workflow"
-      ]
+      "tags": ["dev", "github", "claude-workflow"]
     },
     {
       "id": 5,
       "title": "Finish Phast deployment for PABT",
       "detail": "PABT = Pump & Abrasion Technology. Resolve outstanding GitHub issues, then deploy Phtch and PhX for the PABT client. Repos: https://github.com/Phygital-Tech-Stack/phtch | https://github.com/Phygital-Tech-Stack/PhX",
       "status": "pending",
+      "category": "work",
       "created": "2026-03-16",
       "completed": null,
-      "tags": [
-        "phast",
-        "deploy",
-        "pabt"
-      ]
+      "tags": ["phast", "deploy", "pabt"]
     },
     {
       "id": 6,
       "title": "Upgrade Phast for Tru-Trac",
       "detail": "Apply bug fixes from outstanding GitHub issues on the Phast repo for the Tru-Trac project. Review open issues, fix, and redeploy. Repo: https://github.com/Phygital-Tech-Stack/phast",
       "status": "pending",
+      "category": "work",
       "created": "2026-03-16",
       "completed": null,
-      "tags": [
-        "phast",
-        "tru-trac",
-        "upgrade"
-      ]
+      "tags": ["phast", "tru-trac", "upgrade"]
     },
     {
       "id": 7,
       "title": "Upgrade Phaze for Tru-Trac",
       "detail": "Apply enhancements from outstanding GitHub issues on the Phaze repo for the Tru-Trac project. Review open issues, implement, and redeploy. Repo: https://github.com/Phygital-Tech-Stack/phaze",
       "status": "pending",
+      "category": "work",
       "created": "2026-03-16",
       "completed": null,
-      "tags": [
-        "phaze",
-        "tru-trac",
-        "upgrade"
-      ]
+      "tags": ["phaze", "tru-trac", "upgrade"]
     }
   ],
   "next_id": 8

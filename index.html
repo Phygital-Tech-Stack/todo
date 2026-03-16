@@ -160,6 +160,17 @@
       font-size: 0.72rem;
     }
 
+    .cat-pill {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 2px 7px;
+      border-radius: 6px;
+    }
+    .cat-pill.work     { background: rgba(74,144,217,0.12); color: #4a90d9; }
+    .cat-pill.personal { background: rgba(76,175,80,0.12);  color: #4caf50; }
+
     .date-label {
       font-size: 0.72rem;
       color: var(--tg-theme-hint-color, #666);
@@ -431,7 +442,12 @@
     <span class="badge" id="pending-count">…</span>
   </header>
 
-  <div class="filter-tabs">
+  <div class="filter-tabs" id="cat-tabs">
+    <button class="tab active" data-cat="work" onclick="setCat('work')">💼 Work</button>
+    <button class="tab" data-cat="personal" onclick="setCat('personal')">🏠 Personal</button>
+    <button class="tab" data-cat="all" onclick="setCat('all')">All</button>
+  </div>
+  <div class="filter-tabs" id="status-tabs" style="margin-top:-8px;">
     <button class="tab active" data-filter="pending" onclick="setFilter('pending')">Pending</button>
     <button class="tab" data-filter="all" onclick="setFilter('all')">All</button>
     <button class="tab" data-filter="done" onclick="setFilter('done')">Done</button>
@@ -459,6 +475,7 @@
     let allTasks = [];
     let doneIds = new Set();
     let currentFilter = 'pending';
+    let currentCat = 'work';
     let activeTaskId = null;
 
     async function loadTasks() {
@@ -477,23 +494,34 @@
 
     function setFilter(f) {
       currentFilter = f;
-      document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.filter === f));
+      document.querySelectorAll('#status-tabs .tab').forEach(t => t.classList.toggle('active', t.dataset.filter === f));
+      render();
+    }
+
+    function setCat(c) {
+      currentCat = c;
+      document.querySelectorAll('#cat-tabs .tab').forEach(t => t.classList.toggle('active', t.dataset.cat === c));
       render();
     }
 
     function render() {
-      const pending = allTasks.filter(t => t.status === 'pending');
+      const catTasks = currentCat === 'all' ? allTasks : allTasks.filter(t => (t.category||'work') === currentCat);
+      const pending = catTasks.filter(t => t.status === 'pending');
       document.getElementById('pending-count').textContent = pending.length + ' pending';
 
       let tasks = allTasks;
-      if (currentFilter === 'pending') tasks = allTasks.filter(t => t.status === 'pending');
-      else if (currentFilter === 'done') tasks = allTasks.filter(t => t.status === 'done');
+      // Category filter
+      if (currentCat !== 'all') tasks = tasks.filter(t => (t.category || 'work') === currentCat);
+      // Status filter
+      if (currentFilter === 'pending') tasks = tasks.filter(t => t.status === 'pending');
+      else if (currentFilter === 'done') tasks = tasks.filter(t => t.status === 'done');
 
       if (tasks.length === 0) {
         document.getElementById('task-list-container').innerHTML = `
           <div class="empty-state">
             <div class="icon">${currentFilter === 'done' ? '🏆' : '✅'}</div>
             <p>${currentFilter === 'pending' ? 'No pending tasks — clean slate!' : 'No tasks here yet.'}</p>
+            <p style="font-size:0.8rem;margin-top:6px;opacity:0.6">${currentCat !== 'all' ? 'Switch to All to see other categories.' : ''}</p>
           </div>`;
         return;
       }
@@ -523,6 +551,7 @@
               <div class="task-title">${escHtml(t.title)}</div>
               ${t.detail ? `<div class="task-detail">${escHtml(t.detail)}</div>` : ''}
               <div class="task-meta">
+                <span class="cat-pill ${(t.category||'work')}">${(t.category||'work') === 'work' ? '💼' : '🏠'} ${escHtml(t.category||'work')}</span>
                 ${(t.tags || []).map(tag => `<span class="tag">${escHtml(tag)}</span>`).join('')}
                 <span class="date-label">${t.completed ? '✅ ' + t.completed : '📅 ' + t.created}</span>
               </div>
