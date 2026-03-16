@@ -50,7 +50,20 @@
         "github",
         "claude-workflow"
       ]
+    },
+    {
+      "id": 5,
+      "title": "Finish Phast deployment for PABT",
+      "detail": "",
+      "status": "pending",
+      "created": "2026-03-16",
+      "completed": null,
+      "tags": [
+        "phast",
+        "deploy",
+        "pabt"
+      ]
     }
   ],
-  "next_id": 5
+  "next_id": 6
 }
