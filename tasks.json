@@ -80,7 +80,7 @@
     {
       "id": 7,
       "title": "Upgrade Phaze for Tru-Trac",
-      "detail": "",
+      "detail": "Apply enhancements from outstanding GitHub issues on the Phaze repo for the Tru-Trac project. Review open issues, implement, and redeploy. Repo: https://github.com/Phygital-Tech-Stack/phaze",
       "status": "pending",
       "created": "2026-03-16",
       "completed": null,
