@@ -80,10 +80,19 @@
       gap: 12px;
       transition: opacity 0.2s;
       cursor: pointer;
+      border-left: 4px solid transparent;
     }
 
     .task-card:active { opacity: 0.75; }
     .task-card.done { opacity: 0.45; }
+
+    .task-card.color-deploy  { border-left-color: #4caf50; background: linear-gradient(90deg, rgba(76,175,80,0.1) 0%, var(--tg-theme-secondary-bg-color,#16213e) 60%); }
+    .task-card.color-upgrade { border-left-color: #ab47bc; background: linear-gradient(90deg, rgba(171,71,188,0.1) 0%, var(--tg-theme-secondary-bg-color,#16213e) 60%); }
+    .task-card.color-dev     { border-left-color: #4a90d9; background: linear-gradient(90deg, rgba(74,144,217,0.1) 0%, var(--tg-theme-secondary-bg-color,#16213e) 60%); }
+    .task-card.color-grw     { border-left-color: #ff9800; background: linear-gradient(90deg, rgba(255,152,0,0.1) 0%, var(--tg-theme-secondary-bg-color,#16213e) 60%); }
+    .task-card.color-phast   { border-left-color: #26c6da; background: linear-gradient(90deg, rgba(38,198,218,0.1) 0%, var(--tg-theme-secondary-bg-color,#16213e) 60%); }
+    .task-card.color-phaze   { border-left-color: #ef5350; background: linear-gradient(90deg, rgba(239,83,80,0.1) 0%, var(--tg-theme-secondary-bg-color,#16213e) 60%); }
+    .task-card.color-finance { border-left-color: #ffd93d; background: linear-gradient(90deg, rgba(255,217,61,0.1) 0%, var(--tg-theme-secondary-bg-color,#16213e) 60%); }
 
     .check-btn {
       flex-shrink: 0;
@@ -492,8 +501,17 @@
       const html = tasks.map(t => {
         const isDone = t.status === 'done' || doneIds.has(t.id);
         const checked = doneIds.has(t.id) && t.status !== 'done';
+        const tags = t.tags || [];
+        const colorClass = tags.includes('phaze') ? 'color-phaze'
+          : tags.includes('phast') ? 'color-phast'
+          : tags.includes('grw') ? 'color-grw'
+          : tags.includes('finance') ? 'color-finance'
+          : tags.some(x => x.includes('upgrade')) ? 'color-upgrade'
+          : tags.some(x => x.includes('deploy')) ? 'color-deploy'
+          : tags.includes('dev') || tags.includes('github') ? 'color-dev'
+          : '';
         return `
-          <div class="task-card ${isDone ? 'done' : ''}" id="card-${t.id}" onclick="openSheet(${t.id})">
+          <div class="task-card ${isDone ? 'done' : ''} ${colorClass}" id="card-${t.id}" onclick="openSheet(${t.id})">
             <button class="check-btn ${checked ? 'checked' : ''}"
                     onclick="event.stopPropagation(); toggleDone(${t.id})"
                     ${t.status === 'done' ? 'disabled' : ''}>
