@@ -1,0 +1,43 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Claude Workflow repo \u2014 get up to date",
+      "detail": "Review and close/fix outstanding issues on the Claude workflow repo",
+      "status": "pending",
+      "created": "2026-03-16",
+      "completed": null,
+      "tags": [
+        "dev",
+        "github"
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Alu-Cab questionnaires \u2014 fix for discovery phase",
+      "detail": "Fix questionnaires for the Alu-Cab discovery phase running on the OST machine (same host as OpenClaw/OpenFlow)",
+      "status": "done",
+      "created": "2026-03-16",
+      "completed": "2026-03-16",
+      "tags": [
+        "alu-cab",
+        "openflow",
+        "dev"
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Deploy Phlow for GRW",
+      "detail": "Deploy Phlow (Ekkerd's own workflow management app) for GRW. Repo: https://github.com/Phygital-Tech-Stack/phlow",
+      "status": "pending",
+      "created": "2026-03-16",
+      "completed": null,
+      "tags": [
+        "openflow",
+        "grw",
+        "deploy"
+      ]
+    }
+  ],
+  "next_id": 4
+}

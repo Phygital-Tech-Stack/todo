@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Clawd TODO</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--tg-theme-bg-color, #1a1a2e);
+      color: var(--tg-theme-text-color, #e0e0e0);
+      min-height: 100vh;
+      padding: 16px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--tg-theme-text-color, #e0e0e0);
+    }
+
+    .badge {
+      background: var(--tg-theme-button-color, #4a90d9);
+      color: var(--tg-theme-button-text-color, #fff);
+      border-radius: 12px;
+      padding: 2px 10px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .tab {
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1.5px solid var(--tg-theme-hint-color, #555);
+      background: transparent;
+      color: var(--tg-theme-hint-color, #aaa);
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .tab.active {
+      background: var(--tg-theme-button-color, #4a90d9);
+      color: var(--tg-theme-button-text-color, #fff);
+      border-color: var(--tg-theme-button-color, #4a90d9);
+    }
+
+    .task-list { display: flex; flex-direction: column; gap: 10px; }
+
+    .task-card {
+      background: var(--tg-theme-secondary-bg-color, #16213e);
+      border-radius: 12px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      transition: opacity 0.2s;
+    }
+
+    .task-card.done { opacity: 0.45; }
+
+    .check-btn {
+      flex-shrink: 0;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 2px solid var(--tg-theme-button-color, #4a90d9);
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+      margin-top: 1px;
+    }
+
+    .check-btn.checked {
+      background: #4caf50;
+      border-color: #4caf50;
+    }
+
+    .check-btn svg { display: none; }
+    .check-btn.checked svg { display: block; }
+
+    .task-body { flex: 1; min-width: 0; }
+
+    .task-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      line-height: 1.3;
+      word-break: break-word;
+    }
+
+    .task-card.done .task-title {
+      text-decoration: line-through;
+      opacity: 0.6;
+    }
+
+    .task-detail {
+      font-size: 0.78rem;
+      color: var(--tg-theme-hint-color, #888);
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+
+    .task-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 7px;
+    }
+
+    .tag {
+      background: rgba(74, 144, 217, 0.15);
+      color: var(--tg-theme-button-color, #4a90d9);
+      border-radius: 8px;
+      padding: 2px 7px;
+      font-size: 0.72rem;
+    }
+
+    .date-label {
+      font-size: 0.72rem;
+      color: var(--tg-theme-hint-color, #666);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--tg-theme-hint-color, #888);
+    }
+
+    .empty-state .icon { font-size: 3rem; margin-bottom: 12px; }
+    .empty-state p { font-size: 0.9rem; }
+
+    .submit-bar {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      padding: 12px 16px;
+      background: var(--tg-theme-bg-color, #1a1a2e);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: none;
+    }
+
+    .submit-bar.visible { display: block; }
+
+    .submit-btn {
+      width: 100%;
+      padding: 13px;
+      border-radius: 12px;
+      border: none;
+      background: var(--tg-theme-button-color, #4a90d9);
+      color: var(--tg-theme-button-text-color, #fff);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: var(--tg-theme-hint-color, #888);
+      font-size: 0.9rem;
+    }
+
+    .error-msg {
+      background: rgba(255, 80, 80, 0.1);
+      border: 1px solid rgba(255, 80, 80, 0.3);
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 0.85rem;
+      color: #ff6b6b;
+      margin-bottom: 16px;
+    }
+
+    /* bottom padding when submit bar visible */
+    body.has-submit { padding-bottom: 72px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>📋 TODO</h1>
+    <span class="badge" id="pending-count">…</span>
+  </header>
+
+  <div class="filter-tabs">
+    <button class="tab active" data-filter="pending" onclick="setFilter('pending')">Pending</button>
+    <button class="tab" data-filter="all" onclick="setFilter('all')">All</button>
+    <button class="tab" data-filter="done" onclick="setFilter('done')">Done</button>
+  </div>
+
+  <div id="error-container"></div>
+  <div id="task-list-container"><div class="loading">Loading tasks…</div></div>
+
+  <div class="submit-bar" id="submit-bar">
+    <button class="submit-btn" onclick="submitDone()">✅ Mark selected as done</button>
+  </div>
+
+  <script>
+    const tg = window.Telegram?.WebApp;
+    if (tg) { tg.ready(); tg.expand(); }
+
+    // tasks.json is in the same repo, fetched relative to the page
+    const TASKS_URL = './tasks.json';
+
+    let allTasks = [];
+    let doneIds = new Set();
+    let currentFilter = 'pending';
+
+    async function loadTasks() {
+      try {
+        const res = await fetch(TASKS_URL + '?t=' + Date.now());
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        allTasks = data.tasks || [];
+        render();
+      } catch (e) {
+        document.getElementById('error-container').innerHTML =
+          `<div class="error-msg">⚠️ Could not load tasks: ${e.message}</div>`;
+        document.getElementById('task-list-container').innerHTML = '';
+      }
+    }
+
+    function setFilter(f) {
+      currentFilter = f;
+      document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.filter === f));
+      render();
+    }
+
+    function render() {
+      const pending = allTasks.filter(t => t.status === 'pending');
+      document.getElementById('pending-count').textContent = pending.length + ' pending';
+
+      let tasks = allTasks;
+      if (currentFilter === 'pending') tasks = allTasks.filter(t => t.status === 'pending');
+      else if (currentFilter === 'done') tasks = allTasks.filter(t => t.status === 'done');
+
+      if (tasks.length === 0) {
+        document.getElementById('task-list-container').innerHTML = `
+          <div class="empty-state">
+            <div class="icon">${currentFilter === 'done' ? '🏆' : '✅'}</div>
+            <p>${currentFilter === 'pending' ? 'No pending tasks — clean slate!' : 'No tasks here yet.'}</p>
+          </div>`;
+        return;
+      }
+
+      const html = tasks.map(t => {
+        const isDone = t.status === 'done' || doneIds.has(t.id);
+        const checked = doneIds.has(t.id) && t.status !== 'done';
+        return `
+          <div class="task-card ${isDone ? 'done' : ''}" id="card-${t.id}">
+            <button class="check-btn ${checked ? 'checked' : ''}"
+                    onclick="toggleDone(${t.id})"
+                    ${t.status === 'done' ? 'disabled' : ''}>
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M2 7L5.5 10.5L12 3.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="task-body">
+              <div class="task-title">${escHtml(t.title)}</div>
+              ${t.detail ? `<div class="task-detail">${escHtml(t.detail)}</div>` : ''}
+              <div class="task-meta">
+                ${(t.tags || []).map(tag => `<span class="tag">${escHtml(tag)}</span>`).join('')}
+                <span class="date-label">${t.completed ? '✅ ' + t.completed : '📅 ' + t.created}</span>
+              </div>
+            </div>
+          </div>`;
+      }).join('');
+
+      document.getElementById('task-list-container').innerHTML = `<div class="task-list">${html}</div>`;
+    }
+
+    function toggleDone(id) {
+      const task = allTasks.find(t => t.id === id);
+      if (!task || task.status === 'done') return;
+
+      if (doneIds.has(id)) {
+        doneIds.delete(id);
+      } else {
+        doneIds.add(id);
+      }
+
+      const bar = document.getElementById('submit-bar');
+      if (doneIds.size > 0) {
+        bar.classList.add('visible');
+        document.body.classList.add('has-submit');
+      } else {
+        bar.classList.remove('visible');
+        document.body.classList.remove('has-submit');
+      }
+
+      render();
+    }
+
+    function submitDone() {
+      if (doneIds.size === 0) return;
+      const ids = Array.from(doneIds);
+      const titles = ids.map(id => allTasks.find(t => t.id === id)?.title).filter(Boolean);
+      const payload = JSON.stringify({ action: 'done', ids });
+
+      if (tg?.sendData) {
+        tg.sendData(payload);
+      } else {
+        // Fallback for browser testing
+        alert('Would send: ' + payload);
+      }
+    }
+
+    function escHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    loadTasks();
+  </script>
+</body>
+</html>
