@@ -79,8 +79,10 @@
       align-items: flex-start;
       gap: 12px;
       transition: opacity 0.2s;
+      cursor: pointer;
     }
 
+    .task-card:active { opacity: 0.75; }
     .task-card.done { opacity: 0.45; }
 
     .check-btn {
@@ -96,6 +98,8 @@
       justify-content: center;
       transition: all 0.15s;
       margin-top: 1px;
+      position: relative;
+      z-index: 2;
     }
 
     .check-btn.checked {
@@ -125,6 +129,11 @@
       color: var(--tg-theme-hint-color, #888);
       margin-top: 4px;
       line-height: 1.4;
+      /* Clamp to 2 lines on list view */
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     .task-meta {
@@ -145,6 +154,13 @@
     .date-label {
       font-size: 0.72rem;
       color: var(--tg-theme-hint-color, #666);
+    }
+
+    .chevron {
+      flex-shrink: 0;
+      color: var(--tg-theme-hint-color, #555);
+      align-self: center;
+      font-size: 1rem;
     }
 
     .empty-state {
@@ -196,8 +212,141 @@
       margin-bottom: 16px;
     }
 
-    /* bottom padding when submit bar visible */
     body.has-submit { padding-bottom: 72px; }
+
+    /* ── Bottom Sheet ─────────────────────────────── */
+    .sheet-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s;
+    }
+
+    .sheet-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .sheet {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: var(--tg-theme-secondary-bg-color, #16213e);
+      border-radius: 20px 20px 0 0;
+      padding: 0 20px 32px;
+      z-index: 101;
+      transform: translateY(100%);
+      transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+      max-height: 82vh;
+      overflow-y: auto;
+    }
+
+    .sheet.open { transform: translateY(0); }
+
+    .sheet-handle {
+      width: 36px;
+      height: 4px;
+      background: var(--tg-theme-hint-color, #444);
+      border-radius: 2px;
+      margin: 12px auto 20px;
+    }
+
+    .sheet-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    .sheet-status.pending {
+      background: rgba(74, 144, 217, 0.15);
+      color: #4a90d9;
+    }
+
+    .sheet-status.done {
+      background: rgba(76, 175, 80, 0.15);
+      color: #4caf50;
+    }
+
+    .sheet-status.snoozed {
+      background: rgba(255, 193, 7, 0.15);
+      color: #ffc107;
+    }
+
+    .sheet-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      line-height: 1.35;
+      margin-bottom: 12px;
+    }
+
+    .sheet-detail {
+      font-size: 0.88rem;
+      color: var(--tg-theme-hint-color, #aaa);
+      line-height: 1.6;
+      margin-bottom: 16px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .sheet-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .sheet-meta {
+      font-size: 0.78rem;
+      color: var(--tg-theme-hint-color, #666);
+      margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .sheet-divider {
+      height: 1px;
+      background: rgba(255,255,255,0.07);
+      margin-bottom: 20px;
+    }
+
+    .sheet-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .sheet-btn {
+      width: 100%;
+      padding: 13px;
+      border-radius: 12px;
+      border: none;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .sheet-btn.primary {
+      background: var(--tg-theme-button-color, #4a90d9);
+      color: var(--tg-theme-button-text-color, #fff);
+    }
+
+    .sheet-btn.secondary {
+      background: rgba(255,255,255,0.06);
+      color: var(--tg-theme-text-color, #e0e0e0);
+    }
+
+    .sheet-btn.danger {
+      background: rgba(255, 80, 80, 0.1);
+      color: #ff6b6b;
+    }
   </style>
 </head>
 <body>
@@ -219,16 +368,22 @@
     <button class="submit-btn" onclick="submitDone()">✅ Mark selected as done</button>
   </div>
 
+  <!-- Bottom Sheet -->
+  <div class="sheet-overlay" id="sheet-overlay" onclick="closeSheet()"></div>
+  <div class="sheet" id="sheet">
+    <div class="sheet-handle"></div>
+    <div id="sheet-content"></div>
+  </div>
+
   <script>
     const tg = window.Telegram?.WebApp;
     if (tg) { tg.ready(); tg.expand(); }
 
-    // tasks.json is in the same repo, fetched relative to the page
     const TASKS_URL = './tasks.json';
-
     let allTasks = [];
     let doneIds = new Set();
     let currentFilter = 'pending';
+    let activeTaskId = null;
 
     async function loadTasks() {
       try {
@@ -271,9 +426,9 @@
         const isDone = t.status === 'done' || doneIds.has(t.id);
         const checked = doneIds.has(t.id) && t.status !== 'done';
         return `
-          <div class="task-card ${isDone ? 'done' : ''}" id="card-${t.id}">
+          <div class="task-card ${isDone ? 'done' : ''}" id="card-${t.id}" onclick="openSheet(${t.id})">
             <button class="check-btn ${checked ? 'checked' : ''}"
-                    onclick="toggleDone(${t.id})"
+                    onclick="event.stopPropagation(); toggleDone(${t.id})"
                     ${t.status === 'done' ? 'disabled' : ''}>
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                 <path d="M2 7L5.5 10.5L12 3.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -287,22 +442,89 @@
                 <span class="date-label">${t.completed ? '✅ ' + t.completed : '📅 ' + t.created}</span>
               </div>
             </div>
+            <span class="chevron">›</span>
           </div>`;
       }).join('');
 
       document.getElementById('task-list-container').innerHTML = `<div class="task-list">${html}</div>`;
     }
 
+    function openSheet(id) {
+      const t = allTasks.find(t => t.id === id);
+      if (!t) return;
+      activeTaskId = id;
+
+      const statusLabel = { pending: '⬜ Pending', done: '✅ Done', snoozed: '💤 Snoozed' }[t.status] || t.status;
+      const isPending = t.status === 'pending';
+      const isDone = t.status === 'done';
+
+      const links = (t.detail || '').match(/https?:\/\/[^\s,)]+/g) || [];
+      const linkHtml = links.length
+        ? `<div style="margin-bottom:16px;">${links.map(url => {
+            const label = url.replace(/^https?:\/\//, '').replace(/\/$/, '').slice(0, 50);
+            return `<a href="${escHtml(url)}" target="_blank"
+              style="display:block;color:var(--tg-theme-button-color,#4a90d9);font-size:0.82rem;margin-bottom:6px;word-break:break-all;">
+              🔗 ${escHtml(label)}</a>`;
+          }).join('')}</div>`
+        : '';
+
+      document.getElementById('sheet-content').innerHTML = `
+        <span class="sheet-status ${t.status}">${statusLabel}</span>
+        <div class="sheet-title">${escHtml(t.title)}</div>
+        ${t.detail ? `<div class="sheet-detail">${escHtml(t.detail)}</div>` : ''}
+        ${linkHtml}
+        ${(t.tags||[]).length ? `<div class="sheet-tags">${t.tags.map(tag => `<span class="tag">${escHtml(tag)}</span>`).join('')}</div>` : ''}
+        <div class="sheet-meta">
+          <span>📅 Created: ${t.created}</span>
+          ${t.completed ? `<span>✅ Completed: ${t.completed}</span>` : ''}
+          ${t.snooze_until ? `<span>💤 Snoozed until: ${t.snooze_until}</span>` : ''}
+          <span>#${t.id}</span>
+        </div>
+        <div class="sheet-divider"></div>
+        <div class="sheet-actions">
+          ${isPending ? `<button class="sheet-btn primary" onclick="sheetMarkDone()">✅ Mark as Done</button>` : ''}
+          ${isDone ? `<button class="sheet-btn secondary" onclick="sheetReopen()">🔄 Reopen</button>` : ''}
+          <button class="sheet-btn secondary" onclick="closeSheet()">Close</button>
+        </div>
+      `;
+
+      document.getElementById('sheet-overlay').classList.add('open');
+      document.getElementById('sheet').classList.add('open');
+
+      if (tg?.BackButton) {
+        tg.BackButton.show();
+        tg.BackButton.onClick(closeSheet);
+      }
+    }
+
+    function closeSheet() {
+      document.getElementById('sheet-overlay').classList.remove('open');
+      document.getElementById('sheet').classList.remove('open');
+      activeTaskId = null;
+      if (tg?.BackButton) tg.BackButton.hide();
+    }
+
+    function sheetMarkDone() {
+      if (!activeTaskId) return;
+      doneIds.add(activeTaskId);
+      closeSheet();
+      const bar = document.getElementById('submit-bar');
+      bar.classList.add('visible');
+      document.body.classList.add('has-submit');
+      render();
+    }
+
+    function sheetReopen() {
+      if (!activeTaskId) return;
+      const payload = JSON.stringify({ action: 'reopen', ids: [activeTaskId] });
+      if (tg?.sendData) tg.sendData(payload);
+      closeSheet();
+    }
+
     function toggleDone(id) {
       const task = allTasks.find(t => t.id === id);
       if (!task || task.status === 'done') return;
-
-      if (doneIds.has(id)) {
-        doneIds.delete(id);
-      } else {
-        doneIds.add(id);
-      }
-
+      if (doneIds.has(id)) { doneIds.delete(id); } else { doneIds.add(id); }
       const bar = document.getElementById('submit-bar');
       if (doneIds.size > 0) {
         bar.classList.add('visible');
@@ -311,40 +533,28 @@
         bar.classList.remove('visible');
         document.body.classList.remove('has-submit');
       }
-
       render();
     }
 
     function submitDone() {
       if (doneIds.size === 0) return;
       const ids = Array.from(doneIds);
-      const titles = ids.map(id => allTasks.find(t => t.id === id)?.title).filter(Boolean);
       const payload = JSON.stringify({ action: 'done', ids });
-
-      if (tg?.sendData) {
-        tg.sendData(payload);
-      } else {
-        // Fallback for browser testing
-        alert('Would send: ' + payload);
-      }
+      if (tg?.sendData) { tg.sendData(payload); }
+      else { alert('Would send: ' + payload); }
     }
 
     function escHtml(str) {
       return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
+
+    // Close sheet on back swipe / escape
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSheet(); });
 
     loadTasks();
-
-    // Register service worker
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./sw.js');
-    }
-
-
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js');
   </script>
 </body>
 </html>
