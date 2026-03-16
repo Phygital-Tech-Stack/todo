@@ -1,6 +1,6 @@
 {
-  "name": "Clawd — Daily TODO",
-  "short_name": "TODO",
+  "name": "Nudge",
+  "short_name": "Nudge",
   "description": "Clawd daily task tracker",
   "start_url": "/todo/",
   "scope": "/todo/",
