@@ -1,4 +1,4 @@
-const CACHE = 'clawd-todo-v2';
+const CACHE = 'nudge-v1';
 
 self.addEventListener('install', e => {
   self.skipWaiting();
