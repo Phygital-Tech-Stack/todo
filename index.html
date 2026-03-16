@@ -347,6 +347,73 @@
       background: rgba(255, 80, 80, 0.1);
       color: #ff6b6b;
     }
+
+    .comments-section { margin-bottom: 20px; }
+
+    .comments-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--tg-theme-hint-color, #666);
+      margin-bottom: 10px;
+    }
+
+    .comment-item {
+      background: rgba(255,255,255,0.04);
+      border-radius: 8px;
+      padding: 9px 12px;
+      margin-bottom: 7px;
+    }
+
+    .comment-text {
+      font-size: 0.85rem;
+      line-height: 1.45;
+      word-break: break-word;
+    }
+
+    .comment-date {
+      font-size: 0.7rem;
+      color: var(--tg-theme-hint-color, #666);
+      margin-top: 4px;
+    }
+
+    .comment-input-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .comment-input {
+      flex: 1;
+      background: rgba(255,255,255,0.06);
+      border: 1.5px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 9px 12px;
+      color: var(--tg-theme-text-color, #e0e0e0);
+      font-size: 0.88rem;
+      outline: none;
+      font-family: inherit;
+    }
+
+    .comment-input:focus {
+      border-color: var(--tg-theme-button-color, #4a90d9);
+    }
+
+    .comment-send-btn {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      border: none;
+      background: var(--tg-theme-button-color, #4a90d9);
+      color: white;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   </style>
 </head>
 <body>
@@ -481,6 +548,25 @@
           <span>#${t.id}</span>
         </div>
         <div class="sheet-divider"></div>
+        <div class="comments-section">
+          <div class="comments-label">💬 Comments</div>
+          <div id="comments-list">
+            ${(t.comments && t.comments.length)
+              ? t.comments.map(c => `
+                <div class="comment-item">
+                  <div class="comment-text">${escHtml(c.text)}</div>
+                  <div class="comment-date">${c.date}</div>
+                </div>`).join('')
+              : `<div style="font-size:0.82rem;color:var(--tg-theme-hint-color,#666);margin-bottom:8px;">No comments yet.</div>`
+            }
+          </div>
+          <div class="comment-input-row">
+            <input class="comment-input" id="comment-input" type="text" placeholder="Add a comment…"
+              onkeydown="if(event.key==='Enter')submitComment()" />
+            <button class="comment-send-btn" onclick="submitComment()">↑</button>
+          </div>
+        </div>
+        <div class="sheet-divider"></div>
         <div class="sheet-actions">
           ${isPending ? `<button class="sheet-btn primary" onclick="sheetMarkDone()">✅ Mark as Done</button>` : ''}
           ${isDone ? `<button class="sheet-btn secondary" onclick="sheetReopen()">🔄 Reopen</button>` : ''}
@@ -512,6 +598,28 @@
       bar.classList.add('visible');
       document.body.classList.add('has-submit');
       render();
+    }
+
+    function submitComment() {
+      const input = document.getElementById('comment-input');
+      const text = input?.value?.trim();
+      if (!text || !activeTaskId) return;
+      const payload = JSON.stringify({ action: 'comment', ids: [activeTaskId], text });
+      if (tg?.sendData) {
+        tg.sendData(payload);
+      } else {
+        alert('Would send: ' + payload);
+      }
+      // Optimistic UI — append immediately
+      const list = document.getElementById('comments-list');
+      const today = new Date().toISOString().slice(0, 10);
+      const noComments = list.querySelector('div[style]');
+      if (noComments) noComments.remove();
+      const el = document.createElement('div');
+      el.className = 'comment-item';
+      el.innerHTML = `<div class="comment-text">${escHtml(text)}</div><div class="comment-date">${today}</div>`;
+      list.appendChild(el);
+      input.value = '';
     }
 
     function sheetReopen() {
