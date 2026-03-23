@@ -96,7 +96,17 @@
         "tru-trac",
         "upgrade"
       ]
+    },
+    {
+      "id": 8,
+      "title": "Implement OpenClaw for Tru Trac",
+      "detail": "",
+      "status": "pending",
+      "category": "work",
+      "created": "2026-03-23",
+      "completed": null,
+      "tags": []
     }
   ],
-  "next_id": 8
+  "next_id": 9
 }
