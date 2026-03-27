@@ -101,10 +101,10 @@
       "id": 9,
       "title": "Implement OpenClaw for Tru Trac",
       "detail": "Deliver AI Operations Platform Proposal v2.0 (dated 9 Mar 2026). 5 exec users: Jonathan (CEO), Shaun (COO), Franco Cloete (GM Mfg), Cezanne Jovin (CFO), David Pereira (Head of Sales). Phase 1 fixed price R65,750 \u2014 infrastructure hardening, Docker, Gateway + 2x workspace config, exec persona design (CEO+COO), Google Workspace integration, Telegram channels, automated briefings, skills curation, onboarding. Payment: 50% on acceptance (R32,875) + 50% on go-live. Timeline: 4\u20136 weeks from kick-off. Phase 2 (R25\u201335k) follows; Phase 3 triggered by TTR SYSPRO go-live (~mid-April 2026). Companion retainer R25,000/month starts calendar month after Phase 1 go-live (3-month minimum). Proposal valid 30 days from 9 Mar 2026 \u2014 expiry ~8 Apr 2026. Pharos/SYSPRO context relevant for Phase 3 integration.",
-      "status": "pending",
+      "status": "done",
       "category": "work",
       "created": "2026-03-23",
-      "completed": null,
+      "completed": "2026-03-27",
       "tags": []
     }
   ],
