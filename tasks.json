@@ -106,7 +106,17 @@
       "created": "2026-03-23",
       "completed": "2026-03-27",
       "tags": []
+    },
+    {
+      "id": 10,
+      "title": "Finish commit on phast",
+      "detail": "Local changes on desktop not committed to git \u2014 power failure. Commit and push.",
+      "status": "pending",
+      "category": "work",
+      "created": "2026-04-29",
+      "completed": null,
+      "tags": []
     }
   ],
-  "next_id": 10
+  "next_id": 11
 }
