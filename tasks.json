@@ -116,7 +116,17 @@
       "created": "2026-04-29",
       "completed": null,
       "tags": []
+    },
+    {
+      "id": 11,
+      "title": "Finish fix of PhX",
+      "detail": "Local changes on desktop not committed to git \u2014 power failure. Commit and push.",
+      "status": "pending",
+      "category": "work",
+      "created": "2026-04-29",
+      "completed": null,
+      "tags": []
     }
   ],
-  "next_id": 11
+  "next_id": 12
 }
