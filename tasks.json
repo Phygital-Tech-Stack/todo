@@ -131,10 +131,10 @@
       "id": 12,
       "title": "Change license disk on Ford Bantam",
       "detail": "",
-      "status": "pending",
+      "status": "done",
       "category": "work",
       "created": "2026-07-18",
-      "completed": null,
+      "completed": "2026-07-22",
       "tags": [
         "vehicle",
         "admin"
