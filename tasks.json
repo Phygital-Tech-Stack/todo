@@ -139,7 +139,21 @@
         "vehicle",
         "admin"
       ]
+    },
+    {
+      "id": 13,
+      "title": "Move money between accounts in Nedbank",
+      "detail": "Details pending \u2014 need: source account, destination account, amount, and deadline. Will remind once specifics are confirmed.",
+      "status": "pending",
+      "category": "work",
+      "created": "2026-08-04",
+      "completed": null,
+      "tags": [
+        "finance",
+        "nedbank",
+        "banking"
+      ]
     }
   ],
-  "next_id": 13
+  "next_id": 14
 }
