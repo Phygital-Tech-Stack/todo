@@ -153,7 +153,21 @@
         "nedbank",
         "banking"
       ]
+    },
+    {
+      "id": 14,
+      "title": "Move money between accounts in Nedbank",
+      "detail": "Specifics pending: from which account, to which account, amount, and deadline. Will pre-stage reminder + context (balances, FX, cutoff times) once details are known.",
+      "status": "pending",
+      "category": "work",
+      "created": "2026-08-04",
+      "completed": null,
+      "tags": [
+        "finance",
+        "nedbank",
+        "banking"
+      ]
     }
   ],
-  "next_id": 14
+  "next_id": 15
 }
