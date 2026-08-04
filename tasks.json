@@ -142,8 +142,8 @@
     },
     {
       "id": 13,
-      "title": "Move money between accounts in Nedbank",
-      "detail": "Details pending \u2014 need: source account, destination account, amount, and deadline. Will remind once specifics are confirmed.",
+      "title": "Transfer R80k to Nedbank home loan",
+      "detail": "From transactional \u2192 home loan account. R80,000. Deadline: Thu 2026-08-06. Same-bank transfer via Nedbank app \u2014 instant, no fee. Recommend doing Wed 2026-08-05 to leave buffer.",
       "status": "pending",
       "category": "work",
       "created": "2026-08-04",
@@ -151,21 +151,8 @@
       "tags": [
         "finance",
         "nedbank",
-        "banking"
-      ]
-    },
-    {
-      "id": 14,
-      "title": "Move money between accounts in Nedbank",
-      "detail": "Specifics pending: from which account, to which account, amount, and deadline. Will pre-stage reminder + context (balances, FX, cutoff times) once details are known.",
-      "status": "pending",
-      "category": "work",
-      "created": "2026-08-04",
-      "completed": null,
-      "tags": [
-        "finance",
-        "nedbank",
-        "banking"
+        "banking",
+        "deadline-thu"
       ]
     }
   ],
