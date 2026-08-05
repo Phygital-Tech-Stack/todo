@@ -144,10 +144,10 @@
       "id": 13,
       "title": "Transfer R80k to Nedbank home loan",
       "detail": "From transactional \u2192 home loan account. R80,000. Deadline: Thu 2026-08-06. Same-bank transfer via Nedbank app \u2014 instant, no fee. Recommend doing Wed 2026-08-05 to leave buffer.",
-      "status": "pending",
+      "status": "done",
       "category": "work",
       "created": "2026-08-04",
-      "completed": null,
+      "completed": "2026-08-05",
       "tags": [
         "finance",
         "nedbank",
