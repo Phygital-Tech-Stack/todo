@@ -154,7 +154,23 @@
         "banking",
         "deadline-thu"
       ]
+    },
+    {
+      "id": 15,
+      "title": "Review PR #155 (Netting Group Scoping) once Stefan cleans it up",
+      "detail": "StefanB7 / sb/warehouses \u2192 main. Draft PR, +17248/-4246, 293 files, mergeable: false. Author admits 'not done'. Blockers before line review: (a) squash 3 wip commits, (b) rename branch to sb/netting-group-scoping, (c) 5 migrations 0094-0098 need intentional grouping + 1-paragraph justification in PR body, (d) unit tests for ConsumptionScopeResolver covering 4 branches (legacy group w/o frozen DB id / unknown bucket key / COMPANY_WIDE_WAREHOUSE sentinel / group-by-DB-id vs display-name), (e) verify 0095 + 0098 backfill on production-shaped data. Then dig the keystone question: is ConsumptionScopeResolver actually the single source of truth, or are there parallel scope-handling paths in the 30+ forecasting/bucketing/netting files touched?",
+      "status": "pending",
+      "category": "work",
+      "created": "2026-08-06",
+      "completed": null,
+      "tags": [
+        "phaze",
+        "github",
+        "code-review",
+        "stefan",
+        "mrp"
+      ]
     }
   ],
-  "next_id": 15
+  "next_id": 16
 }
