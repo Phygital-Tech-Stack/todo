@@ -198,7 +198,21 @@
         "asus",
         "costing"
       ]
+    },
+    {
+      "id": 18,
+      "title": "Finish Pharos costing on Asus",
+      "detail": "Complete the costing work for Pharos on the Asus machine.",
+      "status": "pending",
+      "category": "work",
+      "created": "2026-08-24",
+      "completed": null,
+      "tags": [
+        "pharos",
+        "asus",
+        "costing"
+      ]
     }
   ],
-  "next_id": 18
+  "next_id": 19
 }
