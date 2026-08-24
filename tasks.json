@@ -184,7 +184,21 @@
         "pr-review",
         "validate-change"
       ]
+    },
+    {
+      "id": 17,
+      "title": "Finish Phaze costing on Asus",
+      "detail": "Complete the costing work for Phaze on the Asus machine.",
+      "status": "pending",
+      "category": "work",
+      "created": "2026-08-24",
+      "completed": null,
+      "tags": [
+        "phaze",
+        "asus",
+        "costing"
+      ]
     }
   ],
-  "next_id": 17
+  "next_id": 18
 }
