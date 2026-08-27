@@ -189,10 +189,10 @@
       "id": 17,
       "title": "Finish Phaze costing on Asus",
       "detail": "Complete the costing work for Phaze on the Asus machine.",
-      "status": "pending",
+      "status": "done",
       "category": "work",
       "created": "2026-08-24",
-      "completed": null,
+      "completed": "2026-08-27",
       "tags": [
         "phaze",
         "asus",
