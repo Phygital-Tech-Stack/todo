@@ -212,7 +212,21 @@
         "asus",
         "costing"
       ]
+    },
+    {
+      "id": 19,
+      "title": "Continue claude session supply-reader-validation-deploy in Phaze repo on Asus",
+      "detail": "Resume claude session supply-reader-validation-deploy in the phaze repo on the Asus machine",
+      "status": "pending",
+      "category": "work",
+      "created": "2026-09-09",
+      "completed": null,
+      "tags": [
+        "phaze",
+        "asus",
+        "claude"
+      ]
     }
   ],
-  "next_id": 19
+  "next_id": 20
 }
