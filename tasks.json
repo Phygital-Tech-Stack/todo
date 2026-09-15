@@ -226,7 +226,21 @@
         "asus",
         "claude"
       ]
+    },
+    {
+      "id": 20,
+      "title": "Continue session fix-syspro-issue-to-job-drop in Phast repo on desktop-ultra",
+      "detail": "Resume claude session fix-syspro-issue-to-job-drop in the phast repo on desktop-ultra",
+      "status": "pending",
+      "category": "work",
+      "created": "2026-09-15",
+      "completed": null,
+      "tags": [
+        "phast",
+        "desktop-ultra",
+        "claude"
+      ]
     }
   ],
-  "next_id": 20
+  "next_id": 21
 }
