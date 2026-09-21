@@ -245,10 +245,10 @@
       "id": 21,
       "title": "Complete session weekend-plan-checkpoint in Phast repo on desktop-ultra",
       "detail": "Blocked: waiting for confirmation from Pump and Abrasion that they tested a PO receipt against a subcontract operation. Once confirmed, resume claude session weekend-plan-checkpoint in the phast repo on desktop-ultra.",
-      "status": "pending",
+      "status": "done",
       "category": "work",
       "created": "2026-09-18",
-      "completed": null,
+      "completed": "2026-09-21",
       "tags": [
         "phast",
         "desktop-ultra",
