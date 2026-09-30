@@ -275,10 +275,10 @@
       "id": 23,
       "title": "Run docs/runbooks/android-release-signing.md in icepad repo on asus laptop",
       "detail": "Execute the android-release-signing runbook at docs/runbooks/android-release-signing.md in the icepad repo on the asus laptop.",
-      "status": "pending",
+      "status": "done",
       "category": "work",
       "created": "2026-09-29",
-      "completed": null,
+      "completed": "2026-09-30",
       "tags": [
         "icepad",
         "asus",
