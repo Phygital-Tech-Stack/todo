@@ -285,7 +285,21 @@
         "runbook",
         "android"
       ]
+    },
+    {
+      "id": 24,
+      "title": "Install Octopus on Tru-Trac server",
+      "detail": "Install Octopus (Deploy) on the Tru-Trac server.",
+      "status": "pending",
+      "category": "work",
+      "created": "2026-10-01",
+      "completed": null,
+      "tags": [
+        "trutrac",
+        "octopus",
+        "server"
+      ]
     }
   ],
-  "next_id": 24
+  "next_id": 25
 }
