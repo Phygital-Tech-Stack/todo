@@ -304,10 +304,10 @@
       "id": 25,
       "title": "Add Customer API layer to PhX in session quotations-api-syspro-crm on desktop-ultra",
       "detail": "Resume claude session quotations-api-syspro-crm on desktop-ultra and add the Customer API layer to PhX.",
-      "status": "pending",
+      "status": "done",
       "category": "work",
       "created": "2026-10-01",
-      "completed": null,
+      "completed": "2026-10-02",
       "tags": [
         "phx",
         "desktop-ultra",
