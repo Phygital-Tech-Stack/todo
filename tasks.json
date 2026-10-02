@@ -329,7 +329,22 @@
         "claude",
         "crm"
       ]
+    },
+    {
+      "id": 27,
+      "title": "Continue claude code session datagrid-wildcard-and-or-filter in Phaze repo on desktop-ultra",
+      "detail": "Resume claude code session datagrid-wildcard-and-or-filter in the Phaze repo on desktop-ultra.",
+      "status": "pending",
+      "category": "work",
+      "created": "2026-10-02",
+      "completed": null,
+      "tags": [
+        "phaze",
+        "desktop-ultra",
+        "claude",
+        "datagrid"
+      ]
     }
   ],
-  "next_id": 27
+  "next_id": 28
 }
