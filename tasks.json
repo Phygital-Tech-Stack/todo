@@ -314,7 +314,22 @@
         "claude",
         "api"
       ]
+    },
+    {
+      "id": 26,
+      "title": "Continue claude code session customer-crm-sales-order-testing in PhX repo on desktop-ultra",
+      "detail": "Resume claude code session customer-crm-sales-order-testing in the PhX repo on desktop-ultra.",
+      "status": "pending",
+      "category": "work",
+      "created": "2026-10-02",
+      "completed": null,
+      "tags": [
+        "phx",
+        "desktop-ultra",
+        "claude",
+        "crm"
+      ]
     }
   ],
-  "next_id": 26
+  "next_id": 27
 }
