@@ -358,7 +358,21 @@
         "aitrutrac",
         "claude"
       ]
+    },
+    {
+      "id": 29,
+      "title": "Continue phaze session from aitrutrac web sessions",
+      "detail": "Resume the phaze claude code session/work from the aitrutrac web sessions.",
+      "status": "pending",
+      "category": "work",
+      "created": "2026-10-04",
+      "completed": null,
+      "tags": [
+        "phaze",
+        "aitrutrac",
+        "claude"
+      ]
     }
   ],
-  "next_id": 29
+  "next_id": 30
 }
