@@ -344,7 +344,21 @@
         "claude",
         "datagrid"
       ]
+    },
+    {
+      "id": 28,
+      "title": "Continue icepad session from aitrutrac web sessions",
+      "detail": "Resume the icepad claude code session/ work from the aitrutrac web sessions.",
+      "status": "pending",
+      "category": "work",
+      "created": "2026-10-04",
+      "completed": null,
+      "tags": [
+        "icepad",
+        "aitrutrac",
+        "claude"
+      ]
     }
   ],
-  "next_id": 28
+  "next_id": 29
 }
