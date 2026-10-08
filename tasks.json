@@ -386,7 +386,22 @@
         "aitrutrac",
         "claude"
       ]
+    },
+    {
+      "id": 31,
+      "title": "Continue session handover-signature-sync-rollout in icepad repo on desktop-ultra",
+      "detail": "Resume claude code session handover-signature-sync-rollout in the icepad repo on desktop-ultra.",
+      "status": "pending",
+      "category": "work",
+      "created": "2026-10-08",
+      "completed": null,
+      "tags": [
+        "icepad",
+        "desktop-ultra",
+        "claude",
+        "handover"
+      ]
     }
   ],
-  "next_id": 31
+  "next_id": 32
 }
