@@ -401,7 +401,22 @@
         "claude",
         "handover"
       ]
+    },
+    {
+      "id": 32,
+      "title": "Continue session fx-rates-step-8-recap in lamproom on asus",
+      "detail": "Resume claude code session fx-rates-step-8-recap in the lamproom repo on the asus machine.",
+      "status": "pending",
+      "category": "work",
+      "created": "2026-10-16",
+      "completed": null,
+      "tags": [
+        "lamproom",
+        "asus",
+        "claude",
+        "fx-rates"
+      ]
     }
   ],
-  "next_id": 32
+  "next_id": 33
 }
