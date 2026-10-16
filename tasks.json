@@ -290,10 +290,10 @@
       "id": 24,
       "title": "Install Octopus on Tru-Trac server",
       "detail": "Install Octopus (Deploy) on the Tru-Trac server.",
-      "status": "pending",
+      "status": "done",
       "category": "work",
       "created": "2026-10-01",
-      "completed": null,
+      "completed": "2026-10-16",
       "tags": [
         "trutrac",
         "octopus",
